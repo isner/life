@@ -1,3 +1,5 @@
 {
-  "speed": 250
+  "showNums": false,
+  "speed": 250,
+  "dimensions": 10
 }

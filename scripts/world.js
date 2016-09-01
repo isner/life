@@ -10,10 +10,12 @@ var config = require('../config.json');
 module.exports = World;
 
 function World(el) {
+  // TODO don't require a specific `el` with specific styles
   this.el = el;
   this.cells = [];
   this.generation = 0;
-  this.counter = document.getElementById('counter');
+  // TODO construct the counter - make modular
+  this.counter = document.querySelector('#counter .count');
 }
 
 Emitter(World.prototype);
@@ -21,7 +23,7 @@ Emitter(World.prototype);
 World.prototype.register = function (cell) {
   this.cells.push(cell);
   // seed world
-  if ([1,3,4,6,7,8,9,10,12,13,15,40,41,50,51,53].indexOf(cell.n) >= 0) {
+  if ([1,2,3,4,5,6,7,92,93,94,95,96,97,98].indexOf(cell.n) >= 0) {
     cell.live();
   }
   return this;
@@ -29,10 +31,12 @@ World.prototype.register = function (cell) {
 
 World.prototype.start = function () {
   var world = this;
+  console.log('World started with configuration:\n' + world.getBinary());
 
-  world.time = setInterval(() => {
+  world.cycle = setInterval(() => {
     world.generation++;
     var cells = world.cells;
+    var initState = world.getBinary();
 
     cells.forEach((cell, i) => {
       var living = [
@@ -70,11 +74,26 @@ World.prototype.start = function () {
 
     world.counter.innerHTML = world.generation;
 
+    var endBin = cells.reduce((prev, curr) => {
+      return curr.status == 'alive' ? prev + '1' : prev + '0';
+    }, '');
+
+    if (initState == world.getBinary()) {
+      world.stop();
+    }
+
   }, config.speed);
   return this;
 };
 
+World.prototype.getBinary = function () {
+  return this.cells.reduce((prev, curr) => {
+    return curr.status == 'alive' ? prev + '1' : prev + '0';
+  }, '');
+};
+
 World.prototype.stop = function () {
-  this.time = null;
+  clearInterval(this.cycle);
+  console.log('World stopped after ' + this.generation + ' generation(s)');
   return this;
 };

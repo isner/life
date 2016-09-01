@@ -5,6 +5,7 @@ var Emitter = require('component/emitter');
 var dataset = require('code42day/dataset');
 var classes = require('component/classes');
 var events = require('component/events');
+var config = require('../config.json');
 
 module.exports = Cell;
 
@@ -14,6 +15,7 @@ function Cell(n) {
   this.status = 'dead';
   classes(this.el).add('cell');
   dataset(this.el, 'n', n);
+  if (config.showNums) this.el.innerHTML = n;
 }
 
 Emitter(Cell.prototype);

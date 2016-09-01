@@ -1,27 +1,32 @@
 
 SIZE = 500px
+FRAME_COLOR = #000
+CELL_COLOR = #000
 
-#wrap
-  margin 0 auto
-  padding 0
-  width SIZE
-  height SIZE
-  border 1px solid #000
+body
+  color FRAME_COLOR
 
-  .cell
-    float left
-    margin 0
+  #wrap
+    margin 0 auto
     padding 0
-    width 50px
-    height 50px
+    width SIZE
+    height SIZE
+    border 1px solid FRAME_COLOR
 
-    &.a
-      background-color #ddd
+    .cell
+      float left
+      margin 0
+      padding 0
+      width 50px
+      height 50px
 
-#counter
-  margin 0 auto
-  width SIZE
-  font-family Helvetica, Arial, sans-serif
-  font-size 18px
-  line-height 2em
-  text-align center
+      &.a
+        background-color CELL_COLOR
+
+  #counter
+    margin 0 auto
+    width SIZE
+    font-family Helvetica, Arial, sans-serif
+    font-size 18px
+    line-height 2em
+    text-align center
