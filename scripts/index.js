@@ -13,3 +13,5 @@ while (i < 100) {
   world.register(new Cell(i).appendTo(wrap));
   i++;
 }
+
+world.start();

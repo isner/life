@@ -11,12 +11,17 @@ module.exports = Cell;
 function Cell(n) {
   this.el = document.createElement('div');
   this.n = n;
+  this.status = 'dead';
   classes(this.el).add('cell');
   dataset(this.el, 'n', n);
-  this.el.innerHTML = n; // temp
 }
 
 Emitter(Cell.prototype);
+
+Cell.prototype.queue = function (fate) {
+  this.fate = fate;
+  return this;
+};
 
 Cell.prototype.live = function () {
   classes(this.el).add('a');

@@ -29,6 +29,7 @@ gulp.task('scripts', () => {
 
 gulp.task('watch', () => {
   gulp.watch('scripts/**/*.js', ['scripts']);
+  gulp.watch('config.json', ['scripts']);
   gulp.watch('styles/**/*.styl', ['styles']);
   gulp.watch('views/**/*.pug', ['views']);
 });
