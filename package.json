@@ -4,7 +4,7 @@
   "description": "Conway's Game of Life",
   "main": "index.js",
   "scripts": {
-    "postinstall": "gulp",
+    "postinstall": "./node_modules/.bin/gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Matt Isner <isnerms@gmail.com>",
