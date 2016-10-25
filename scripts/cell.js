@@ -16,14 +16,12 @@ function Cell(n) {
   classes(this.el).add('cell');
   dataset(this.el, 'n', n);
   if (config.showNums) this.el.innerHTML = n;
+
+  this.events = events(this.el, this);
+  this.events.bind('click');
 }
 
 Emitter(Cell.prototype);
-
-Cell.prototype.queue = function (fate) {
-  this.fate = fate;
-  return this;
-};
 
 Cell.prototype.live = function () {
   classes(this.el).add('a');
@@ -35,6 +33,19 @@ Cell.prototype.die = function () {
   classes(this.el).remove('a');
   this.status = 'dead';
   return this;
+};
+
+Cell.prototype.toggle = function () {
+  if (this.status == 'alive') {
+    this.die();
+  }
+  else {
+    this.live();
+  }
+};
+
+Cell.prototype.onclick = function () {
+  this.emit('clicked');
 };
 
 Cell.prototype.appendTo = function (target) {

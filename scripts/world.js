@@ -7,42 +7,105 @@ var classes = require('component/classes');
 var events = require('component/events');
 var config = require('../config.json');
 
+var ACTIVE = 'active';
+var LIVE = 'live';
+var DIE = 'die';
+var D = config.dimensions;
+
 module.exports = World;
 
 function World(el) {
-  // TODO don't require a specific `el` with specific styles
+  // TODO construct this element
   this.el = el;
   this.cells = [];
   this.generation = 0;
-  // TODO construct the counter - make modular
-  this.counter = document.querySelector('#counter .count');
+  this.active = false;
+  // TODO construct these elements
+  this.counter = document.querySelector('#controls .count');
+  this.startBtn = document.querySelector('#controls .start');
+  this.edges = {
+    top: new Array(D).fill(0).map(function (n, i) { return i; }),
+    bottom: new Array(D).fill(0).map(function (n, i) { return (D*D-D)+i; }),
+    left: new Array(D).fill(0).map(function (n, i) { return i*D; }),
+    right: new Array(D).fill(0).map(function (n, i) { return (i*D-1)+D; }),
+  };
 }
 
 Emitter(World.prototype);
 
 World.prototype.register = function (cell) {
-  this.cells.push(cell);
-  // seed world
-  if ([1,2,3,4,5,6,7,92,93,94,95,96,97,98].indexOf(cell.n) >= 0) {
-    cell.live();
-  }
+  var world = this;
+
+  world.cells.push(cell);
+
+  cell.on('clicked', function () {
+    if (!world.isActive()) cell.toggle();
+  });
+
+  // random default seed
+  if (Math.random() > 0.7) cell.live();
+  // if (~config.seed.indexOf(cell.n)) cell.live();
+
   return this;
+};
+
+World.prototype.isActive = function () {
+  return this.active;
 };
 
 World.prototype.start = function () {
   var world = this;
-  console.log('World started with configuration:\n' + world.getBinary());
+  var cells = world.cells;
 
-  world.cycle = setInterval(() => {
+  world.active = true;
+  world.startBtn.setAttribute('disabled', 'true');
+  classes(world.el).add('active');
+
+  console.log('World started');
+
+  world.cycleId = setInterval(cycle, config.speed);
+
+  function cycle() {
     world.generation++;
-    var cells = world.cells;
     var initState = world.getBinary();
 
-    cells.forEach((cell, i) => {
-      var living = [
-        cells[i-11], cells[i-10], cells[i-9], cells[i-1],
-        cells[i+1], cells[i+9], cells[i+10], cells[i+11]
-      ].map(neighbor => {
+    cells.forEach((cell, cIndex) => {
+      var neighbors = [
+        cIndex-(D+1),
+        cIndex-D,
+        cIndex-(D-1),
+        cIndex-1,
+        cIndex+1,
+        cIndex+(D-1),
+        cIndex+D,
+        cIndex+(D+1)
+      ].map((n, nIndex) => {
+        if (~world.edges.left.indexOf(cIndex)) {
+          if (~[0,3,5].indexOf(nIndex)) {
+            return n+D;
+          }
+        }
+        if (~world.edges.right.indexOf(cIndex)) {
+          if (~[2,4,7].indexOf(nIndex)) {
+            return n-D;
+          }
+        }
+        if (~world.edges.top.indexOf(cIndex)) {
+          if (~[0,1,2].indexOf(nIndex)) {
+            return (D*D)-Math.abs(n);
+          }
+        }
+        if (~world.edges.bottom.indexOf(cIndex)) {
+          if (~[5,6,7].indexOf(nIndex)) {
+            return n - (D*D);
+          }
+        }
+        return n;
+      });
+
+      var living = neighbors.map(pos => {
+        return cells[pos];
+      }).map(neighbor => {
         return neighbor && neighbor.status == 'alive' ? 1 : 0;
       }).reduce((prev, curr) => {
         return prev + curr;
@@ -50,21 +113,20 @@ World.prototype.start = function () {
 
       if (cell.status == 'alive') {
         if (living < 2) {
-          cell.queue('die'); // underpopulation
+          cell.fate = DIE; // underpopulation
         }
         else if (living >= 2 && living <= 3) {
-          cell.queue('live'); // survival
+          cell.fate = LIVE; // survival
         }
         else if (living > 3) {
-          cell.queue('die'); // overpopulation
+          cell.fate = DIE; // overpopulation
         }
       }
       else if (cell.status == 'dead' && living === 3) {
-        cell.queue('live'); // reproduction
+        cell.fate = LIVE; // reproduction
       }
       else {
-        var fate = cell.status == 'alive' ? 'live' : 'die';
-        cell.queue(fate);
+        cell.fate = cell.status == 'alive' ? LIVE : DIE;
       }
     });
 
@@ -82,7 +144,8 @@ World.prototype.start = function () {
       world.stop();
     }
 
-  }, config.speed);
+  }
+
   return this;
 };
 
@@ -93,7 +156,14 @@ World.prototype.getBinary = function () {
 };
 
 World.prototype.stop = function () {
-  clearInterval(this.cycle);
-  console.log('World stopped after ' + this.generation + ' generation(s)');
+  var world = this;
+  world.active = false;
+  clearInterval(world.cycleId);
+
+  classes(world.el).remove('active');
+  world.startBtn.removeAttribute('disabled');
+
+  console.log('World stopped: ' + world.generation + ' generation(s)');
+
   return this;
 };

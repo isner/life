@@ -4,6 +4,7 @@ FRAME_COLOR = #000
 CELL_COLOR = #000
 
 body
+  font-family Helvetica, Arial, sans-serif
   color FRAME_COLOR
 
   #wrap
@@ -19,14 +20,36 @@ body
       padding 0
       width 50px
       height 50px
+      // width 25px
+      // height 25px
+      outline 1px solid #eee
+      text-align center
+      line-height 3em
+      vertical-align middle
 
       &.a
         background-color CELL_COLOR
+        color #fff
 
-  #counter
+  #controls
     margin 0 auto
     width SIZE
-    font-family Helvetica, Arial, sans-serif
     font-size 18px
     line-height 2em
     text-align center
+
+    button
+      margin 0 1em
+      background-color #fff
+      border 1px solid #ccc
+      font-size 18px
+
+      &:not([disabled="true"]):hover
+        background-color #eee
+
+  #wrap:not(.active)
+    .cell:hover
+      background-color #eee
+      cursor pointer
+      &.a
+        background-color #666
