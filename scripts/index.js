@@ -1016,7 +1016,7 @@ exports.unbind = function(el, type, fn, capture){
   event.unbind(el, type, fn, capture);
 };
 
-}, {"closest":12,"component-closest":12,"event":10,"component-event":10}],
+}, {"closest":12,"component-closest":12,"event":13,"component-event":13}],
 12: [function(require, module, exports) {
 /**
  * Module Dependencies
@@ -1055,8 +1055,8 @@ function closest (el, selector, scope) {
   return matches(el, selector) ? el : null;
 }
 
-}, {"matches-selector":13,"component-matches-selector":13}],
-13: [function(require, module, exports) {
+}, {"matches-selector":14,"component-matches-selector":14}],
+14: [function(require, module, exports) {
 /**
  * Module dependencies.
  */
@@ -1108,8 +1108,8 @@ function match(el, selector) {
   return false;
 }
 
-}, {"query":14,"component-query":14}],
-14: [function(require, module, exports) {
+}, {"query":15,"component-query":15}],
+15: [function(require, module, exports) {
 function one(selector, el) {
   return el.querySelector(selector);
 }
@@ -1130,6 +1130,50 @@ exports.engine = function(obj){
   one = obj.one;
   exports.all = obj.all;
   return exports;
+};
+
+}, {}],
+13: [function(require, module, exports) {
+var bind, unbind, prefix;
+
+function detect () {
+  bind = window.addEventListener ? 'addEventListener' : 'attachEvent';
+  unbind = window.removeEventListener ? 'removeEventListener' : 'detachEvent';
+  prefix = bind !== 'addEventListener' ? 'on' : '';
+}
+
+/**
+ * Bind `el` event `type` to `fn`.
+ *
+ * @param {Element} el
+ * @param {String} type
+ * @param {Function} fn
+ * @param {Boolean} capture
+ * @return {Function}
+ * @api public
+ */
+
+exports.bind = function(el, type, fn, capture){
+  if (!bind) detect();
+  el[bind](prefix + type, fn, capture || false);
+  return fn;
+};
+
+/**
+ * Unbind `el` event `type`'s callback `fn`.
+ *
+ * @param {Element} el
+ * @param {String} type
+ * @param {Function} fn
+ * @param {Boolean} capture
+ * @return {Function}
+ * @api public
+ */
+
+exports.unbind = function(el, type, fn, capture){
+  if (!unbind) detect();
+  el[unbind](prefix + type, fn, capture || false);
+  return fn;
 };
 
 }, {}],

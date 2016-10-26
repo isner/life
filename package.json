@@ -1,6 +1,6 @@
 {
   "name": "life",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Conway's Game of Life",
   "main": "index.js",
   "author": "Matt Isner <isnerms@gmail.com>",

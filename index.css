@@ -19,6 +19,7 @@ body #wrap .cell {
   text-align: center;
   line-height: 3em;
   vertical-align: middle;
+  transition: background-color 250ms;
 }
 body #wrap .cell.a {
   background-color: #000;
