@@ -1,0 +1,49 @@
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  color: #000;
+}
+body #wrap {
+  margin: 0 auto;
+  padding: 0;
+  width: 500px;
+  height: 500px;
+  border: 1px solid #000;
+}
+body #wrap .cell {
+  float: left;
+  margin: 0;
+  padding: 0;
+  width: 50px;
+  height: 50px;
+  outline: 1px solid #eee;
+  text-align: center;
+  line-height: 3em;
+  vertical-align: middle;
+}
+body #wrap .cell.a {
+  background-color: #000;
+  color: #fff;
+}
+body #controls {
+  margin: 0 auto;
+  width: 500px;
+  font-size: 18px;
+  line-height: 2em;
+  text-align: center;
+}
+body #controls button {
+  margin: 0 1em;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  font-size: 18px;
+}
+body #controls button:not([disabled="true"]):hover {
+  background-color: #eee;
+}
+body #wrap:not(.active) .cell:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+body #wrap:not(.active) .cell:hover.a {
+  background-color: #666;
+}
