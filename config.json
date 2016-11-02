@@ -1,6 +1,6 @@
 {
-  "dimensions": 10,
+  "dimensions": 20,
   "seed": [3,4,5],
   "showNums": false,
-  "speed": 250
+  "speed": 300
 }

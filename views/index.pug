@@ -5,11 +5,19 @@ html(lang="en")
     title Life
     link(rel="stylesheet" href="index.css")
   body
-    div#wrap
-    div#controls
-      div
-        span Generations:&nbsp;
-        span.count 0
-      div
-        button.start Start
+    header
+      h1 Conway's Game of Life
+      p
+        a(href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life") What is this?
+        
+    main
+      div#wrap
+      div#controls
+        div
+          span Generations:&nbsp;
+          span.count 0
+        div
+          button.start Start
+          button.stop Stop
+          
     script(src="scripts/index.js")

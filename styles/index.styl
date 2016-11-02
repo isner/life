@@ -7,29 +7,34 @@ body
   font-family Helvetica, Arial, sans-serif
   color FRAME_COLOR
 
+  header
+    margin 0 auto
+    width SIZE
+    text-align center
+
   #wrap
     margin 0 auto
     padding 0
     width SIZE
     height SIZE
-    border 1px solid FRAME_COLOR
+    border 1px solid #000
 
     .cell
+      box-sizing border-box
       float left
       margin 0
       padding 0
-      width 50px
-      height 50px
-      // width 25px
-      // height 25px
-      outline 1px solid #eee
+      width 25px
+      height 25px
+      border 1px solid #eee
       text-align center
-      line-height 3em
+      font-size 10px
+      line-height 2em
       vertical-align middle
-      transition background-color 250ms
+      transition background-color 100ms
 
       &.a
-        background-color CELL_COLOR
+        // background-color CELL_COLOR
         color #fff
 
   #controls

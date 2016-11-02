@@ -14,8 +14,9 @@ var D = config.dimensions;
 
 module.exports = World;
 
-function World(el) {
+function World(el, seed) {
   // TODO construct this element
+  this.useSeed = !!seed;
   this.el = el;
   this.cells = [];
   this.generation = 0;
@@ -23,6 +24,7 @@ function World(el) {
   // TODO construct these elements
   this.counter = document.querySelector('#controls .count');
   this.startBtn = document.querySelector('#controls .start');
+  this.stopBtn = document.querySelector('#controls .stop');
   this.edges = {
     top: new Array(D).fill(0).map(function (n, i) { return i; }),
     bottom: new Array(D).fill(0).map(function (n, i) { return (D*D-D)+i; }),
@@ -42,9 +44,11 @@ World.prototype.register = function (cell) {
     if (!world.isActive()) cell.toggle();
   });
 
-  // random default seed
+  if (this.useSeed) {
+    if (~config.seed.indexOf(cell.n)) cell.live();
+    return this;
+  }
   if (Math.random() > 0.7) cell.live();
-  // if (~config.seed.indexOf(cell.n)) cell.live();
 
   return this;
 };
