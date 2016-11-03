@@ -11,3 +11,4 @@ rm gulpfile.js
 rm README.md
 rm release.sh
 mv build/* .
+rm -r build
