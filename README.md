@@ -21,3 +21,5 @@ When the active cells become stuck in a state which remains static for multiple 
 When the active cells become stuck in a state in which they repeatedly alternate between the same two states indefinitely, this is called an "oscillator". Refresh the page to begin again.
 
 **NOTE**: Oscillators will be handled more elegantly in an upcoming release.
+
+Fixing busted widget
