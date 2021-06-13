@@ -1,12 +1,10 @@
 # Life
 
-A basic implementation of [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) for the browser
+A basic implementation of [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) for the browser.
 
 ## Demo
 
 See a working demo at [mattisner.com/life](http://mattisner.com/life).
-
-You can also download the [latest release](https://github.com/isner/life/releases) and open `index.html` in your browser.
 
 ## Instructions
 
@@ -19,5 +17,3 @@ When the active cells become stuck in a state which remains static for multiple 
 ### "Oscillators"
 
 When the active cells become stuck in a state in which they repeatedly alternate between the same two states indefinitely, this is called an "oscillator". Refresh the page to begin again.
-
-**NOTE**: Oscillators will be handled more elegantly in an upcoming release.
