@@ -2,7 +2,9 @@
   "name": "life",
   "version": "1.2.0",
   "description": "Conway's Game of Life",
-  "main": "index.js",
+  "files": [
+    "dist/"
+  ],
   "author": "Matt Isner <isnerms@gmail.com>",
   "license": "MIT",
   "private": true,
