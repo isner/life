@@ -1,6 +1,6 @@
 {
-  "name": "life",
-  "version": "1.2.1",
+  "name": "@isner/life",
+  "version": "1.2.2",
   "description": "Conway's Game of Life",
   "files": [
     "dist/"
