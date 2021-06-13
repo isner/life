@@ -1,35 +1,21 @@
-'use strict';
+const { src, dest, series } = require('gulp')
+const stylus = require('gulp-stylus')
+const pug = require('gulp-pug')
 
-const stylus = require('gulp-stylus');
-const pug = require('gulp-pug');
-const gulp = require('gulp');
-const Duo = require('duo');
+const DIST_DIR = 'dist'
 
-gulp.task('default', ['views', 'styles', 'scripts']);
-
-gulp.task('views', () => {
-  gulp.src('views/*.pug')
+function views (cb) {
+  src('src/index.pug')
     .pipe(pug())
-    .pipe(gulp.dest('build'));
-});
+    .pipe(dest(DIST_DIR))
+  cb()
+}
 
-gulp.task('styles', () => {
-  gulp.src('styles/*.styl')
+function styles (cb) {
+  src('src/index.styl')
     .pipe(stylus())
-    .pipe(gulp.dest('build'));
-});
+    .pipe(dest(DIST_DIR))
+  cb()
+}
 
-gulp.task('scripts', () => {
-  Duo(__dirname)
-    .entry('scripts/index.js')
-    .write((err) => {
-      if (err) throw err;
-    });
-});
-
-gulp.task('watch', () => {
-  gulp.watch('scripts/**/*.js', ['scripts']);
-  gulp.watch('config.json', ['scripts']);
-  gulp.watch('styles/**/*.styl', ['styles']);
-  gulp.watch('views/**/*.pug', ['views']);
-});
+exports.default = series(views, styles)

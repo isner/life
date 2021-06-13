@@ -1,10 +1,9 @@
 /* globals document */
 'use strict';
 
-var Emitter = require('component/emitter');
-var dataset = require('code42day/dataset');
-var classes = require('component/classes');
-var events = require('component/events');
+var Emitter = require('component-emitter');
+var classes = require('component-classes');
+var events = require('component-events');
 var config = require('../config.json');
 var gradient = require('./gradient');
 
@@ -26,7 +25,7 @@ function Cell(n) {
   this.status = 'dead';
   this.numLived = 0;
   classes(this.el).add('cell');
-  dataset(this.el, 'n', n);
+  this.el.dataset.n = n;
   if (config.showNums) this.el.innerHTML = n;
 
   this.events = events(this.el, this);

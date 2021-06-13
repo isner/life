@@ -1,10 +1,9 @@
 /* globals document */
 'use strict';
 
-var Emitter = require('component/emitter');
-var dataset = require('code42day/dataset');
-var classes = require('component/classes');
-var events = require('component/events');
+var Emitter = require('component-emitter');
+var classes = require('component-classes');
+var events = require('component-events');
 var config = require('../config.json');
 
 var ACTIVE = 'active';
